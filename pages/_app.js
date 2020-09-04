@@ -5,9 +5,17 @@ import '@shopify/polaris/dist/styles.css';
 import translations from '@shopify/polaris/locales/en.json';
 import { Provider } from '@shopify/app-bridge-react';
 import Cookies from 'js-cookie';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+
+const client = new ApolloClient({
+	fetchOptions: {
+		credentials: 'include'
+	},
+});
 
 console.log(process.env.SHOPIFY_API_KEY)
-const config = { apiKey: process.env.SHOPIFY_API_KEY, shopOrigin: Cookies.get("shopOrigin"), forceRedirect: true };
+const config = { apiKey:"f76b24d643f0868b82f5d21ab428be4d", shopOrigin: Cookies.get("shopOrigin"), forceRedirect: true };
 
 class MyApp extends App {
 	render() {
@@ -20,7 +28,9 @@ class MyApp extends App {
 			</Head>
 			<Provider config={config}>
 				<AppProvider i18n={translations}>
-					<Component {...pageProps} />
+					<ApolloProvider client={client}>
+						<Component {...pageProps} />
+					</ApolloProvider>
 				</AppProvider>
 			</Provider>
 			</React.Fragment>

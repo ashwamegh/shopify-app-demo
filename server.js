@@ -11,6 +11,10 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const { default: graphQLProxy } = require('@shopify/koa-shopify-graphql-proxy');
+const { ApiVersion } = require('@shopify/koa-shopify-graphql-proxy');
+
+
 
 const { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY } = process.env;
 
@@ -23,7 +27,7 @@ app.prepare().then(() => {
 		createShopifyAuth({
 			apiKey: SHOPIFY_API_KEY,
 			secret: SHOPIFY_API_SECRET_KEY,
-			scopes: ['read_products'],
+			scopes: ['read_products', 'write_products'],
 			afterAuth(ctx) {
 				const { shop, accessToken } = ctx.session;
 				ctx.cookies.set('shopOrigin', shop, {
@@ -36,6 +40,7 @@ app.prepare().then(() => {
 		}),
 	);
 
+	server.use(graphQLProxy({ version: ApiVersion.April20 }));
 	server.use(verifyRequest());
 	server.use(async (ctx) => {
 		await handle(ctx.req, ctx.res);
