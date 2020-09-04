@@ -1,0 +1,26 @@
+{
+  "name": "test-cart-app-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "@shopify/app-bridge-react": "^1.27.0",
+    "@shopify/koa-shopify-auth": "^3.1.68",
+    "@shopify/polaris": "^5.2.1",
+    "@zeit/next-css": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.2.1",
+    "koa": "^2.13.0",
+    "koa-session": "^6.0.0",
+    "next": "^9.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
